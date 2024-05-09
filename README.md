@@ -1,84 +1,226 @@
-# Exno:1
-Data Cleaning Process
+<h1 align="center">Ex. 1   Data Cleaning and Outlier Detection & Removal</h1>
 
-# AIM
-To read the given data and perform data cleaning and save the cleaned data to a file.
+## AIM
+### To read the given data and perform data cleaning and save the cleaned data to a file.
 
-# Explanation
-Data cleaning is the process of preparing data for analysis by removing or modifying data that is incorrect ,incompleted , irrelevant , duplicated or improperly formatted. Data cleaning is not simply about erasing data ,but rather finding a way to maximize datasets accuracy without necessarily deleting the information.
+## Explanation
+### Data cleaning is the process of preparing data for analysis by removing or modifying data that is incorrect ,incompleted , irrelevant , duplicated or improperly formatted. Data cleaning is not simply about erasing data ,but rather finding a way to maximize datasets accuracy without necessarily deleting the information.
 
-# Algorithm
-STEP 1: Read the given Data
+## Algorithm
+### STEP 1
+#### Read the given Data
 
-STEP 2: Get the information about the data
+### STEP 2
+#### Get the information about the data
 
-STEP 3: Remove the null values from the data
+### STEP 3 
+#### Remove the null values from the data
 
-STEP 4: Save the Clean data to the file
+### STEP 4
+#### Save the Clean data to the file
 
-STEP 5: Remove outliers using IQR
+### STEP 5
+#### Remove outliers using IQR
 
-STEP 6: Use zscore of to remove outliers
+### STEP 6
+#### Use zscore of to remove outliers
 
-# Coding and Output
-```
+## Coding and Outputs
+
+<h3 align="center">Data Cleaning</h3>
+
+```py
 import pandas as pd
-df=pd.read_csv("SAMPLEIDS.csv") 
-df 
-```
-![Screenshot 2024-04-01 093531](https://github.com/pragachellapillai/exno1/assets/148254952/c2118c47-1404-47fa-bca8-7efc04799441)
-```
-df.shape
-```
-![Screenshot 2024-04-01 093857](https://github.com/pragachellapillai/exno1/assets/148254952/2a4b8ce3-1198-443d-9cfb-53352ff29fbf)
-```
-df.describe()
-```
-![Screenshot 2024-04-01 093951](https://github.com/pragachellapillai/exno1/assets/148254952/48c3db1e-ea65-429b-8683-e2883e6bcfd1)
-```
-df.info()
-```
-![Screenshot 2024-04-01 094055](https://github.com/pragachellapillai/exno1/assets/148254952/7a633a2c-9f37-4f70-9afe-ff56063166ba)
-```
-df.isnull().sum()
-```
-![Screenshot 2024-04-01 094223](https://github.com/pragachellapillai/exno1/assets/148254952/eee3f349-8394-4c29-a4a3-0f5e42e0e02e)
-```
-df.nunique()
-```
-![Screenshot 2024-04-01 094238](https://github.com/pragachellapillai/exno1/assets/148254952/ef688bcc-1d36-48b4-8ce0-507ecb56282a)
-```
-df['GENDER'].value_counts()
-```
-![Screenshot 2024-04-01 094452](https://github.com/pragachellapillai/exno1/assets/148254952/c311b7b1-446c-4580-82f0-99828eee0169)
-```
-x=df.dropna(how='any')
-x
-```
-![Screenshot 2024-04-01 094502](https://github.com/pragachellapillai/exno1/assets/148254952/ece797b5-371b-4172-935e-9ad54795e919)
-```
-X2=df.dropna(how='all').shape
+import numpy as np
+import seaborn as sns
+import os 
+df=pd.read_csv("SAMPLEIDS.csv")
 df
 ```
+![image](https://github.com/PSriVarshan/exno1/assets/114944059/ed03bbd1-7c97-4cd8-8cf0-3f5f9e14dcc8)
 
-![Screenshot 2024-04-01 094516](https://github.com/pragachellapillai/exno1/assets/148254952/e24dff8f-a765-4e6d-ae0f-f08b4c9689e2)
-```
-df.dropna(subset=['TOTAL'],how='any').shape
-```
-![Screenshot 2024-04-01 094933](https://github.com/pragachellapillai/exno1/assets/148254952/e77104ad-3690-4fdf-881a-76e60053b0f3)
+```py
+df.isnull().sum()
 
 ```
-tot=df.dropna(subset=['M1','M2','M3','M4'],how='any')
-tot
+
+![image](https://github.com/PSriVarshan/exno1/assets/114944059/57d42b69-bd5e-4c22-b8e8-6f2ae3f0404a)
+
+
+
+```py
+df.isnull().any()
+```
+![image](https://github.com/PSriVarshan/exno1/assets/114944059/918f392c-8185-4d11-94f3-63785887574c)
+
+```py
+df.dropna()
 ```
 
-![Screenshot 2024-04-01 094942](https://github.com/pragachellapillai/exno1/assets/148254952/cf3c1019-d76e-442d-8c11-b0a7a30ef110)
+![image](https://github.com/PSriVarshan/exno1/assets/114944059/38354c0d-60a4-4c93-a25d-4302bad7ac62)
 
-```
+```py
 df.fillna(0)
 ```
 
-![Screenshot 2024-04-01 094951](https://github.com/pragachellapillai/exno1/assets/148254952/e3a405ee-1611-4183-a982-6674e9630a65)
+![image](https://github.com/PSriVarshan/exno1/assets/114944059/2b8ac0df-d0c1-46e1-87a4-ff8f930ff3d7)
 
-# Result
-          <<include your Result here>>
+```py
+df.fillna(method = 'ffill')
+```
+
+![image](https://github.com/PSriVarshan/exno1/assets/114944059/87b27264-923b-4b0d-904f-106894f0fbcd)
+
+```py
+
+df.fillna(method = 'bfill')
+```
+
+![image](https://github.com/PSriVarshan/exno1/assets/114944059/9a0df734-21b5-4b1e-baf0-2c87c82fafd7)
+
+```py
+df_dropped = df.dropna()
+df_dropped
+```
+
+![image](https://github.com/PSriVarshan/exno1/assets/114944059/e7881fae-d374-4f76-bac8-481821e6461e)
+
+```py
+df.fillna({'GENDER':'FEMALE','NAME':'PRIYU','ADDRESS':'POONAMALEE','M1':98,'M2':87,'M3':76,'M4':92,'TOTAL':305,'AVG':89.999999})
+```
+![image](https://github.com/PSriVarshan/exno1/assets/114944059/71c04f95-74c9-4971-aff9-f21a3accb70a)
+
+
+<hr><hr>
+
+<h3 align="center">IQR(Inter Quartile Range)</h3>
+
+```py
+import pandas as pd
+```
+
+```py
+ir=pd.read_csv('iris.csv')
+ir
+```
+![image](https://github.com/PSriVarshan/exno1/assets/114944059/32840cf3-736d-4c4b-bc8e-2d55ee7e1417)
+
+```py
+ir.describe()
+```
+![image](https://github.com/PSriVarshan/exno1/assets/114944059/e0ce99a8-f7b9-4ccd-9ac8-df82b53f4bc6)
+
+```py
+import seaborn as sns
+```
+
+```py
+
+sns.boxplot(x='sepal_width',data=ir)
+```
+
+
+![image](https://github.com/PSriVarshan/exno1/assets/114944059/1c9bfcae-a2b3-4573-b204-c2590c8bc9a6)
+
+
+```py
+c1=ir.sepal_width.quantile(0.25)
+c3=ir.sepal_width.quantile(0.75)
+iq=c3-c1
+print(c3)
+```
+
+![image](https://github.com/PSriVarshan/exno1/assets/114944059/05ef4457-91f5-4a19-b413-1d4eea93b0a7)
+
+```py
+
+rid=ir[((ir.sepal_width<(c1-1.5*iq))|(ir.sepal_width>(c3+1.5*iq)))]
+rid['sepal_width']
+```
+
+![image](https://github.com/PSriVarshan/exno1/assets/114944059/c554ef7e-012c-40f6-8b82-dbe4ae9a20b3)
+
+```py
+delid=ir[~((ir.sepal_width<(c1-1.5*iq))|(ir.sepal_width>(c3+1.5*iq)))]
+delid
+```
+![image](https://github.com/PSriVarshan/exno1/assets/114944059/0a32cc24-1970-41a2-acf7-cb58a6955c01)
+
+```py
+sns.boxplot(x='sepal_width',data=delid)
+```
+![image](https://github.com/PSriVarshan/exno1/assets/114944059/19664bc6-f558-48f3-b449-fa6652c4e7ed)
+
+<hr><hr>
+
+<h3 align="center">Z-Score</h3>
+
+```py
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+import scipy.stats as stats
+```
+```py
+dataset=pd.read_csv("heights.csv")
+dataset
+```
+
+![image](https://github.com/PSriVarshan/exno1/assets/114944059/080b6095-73da-4bee-a763-08c7a0b81a07)
+
+```py
+df = pd.read_csv("heights.csv")
+q1 = df['height'].quantile(0.25)
+q2 = df['height'].quantile(0.5)
+q3 = df['height'].quantile(0.75)
+```
+
+```py
+iqr = q3-q1
+iqr
+```
+
+![image](https://github.com/PSriVarshan/exno1/assets/114944059/ffb0b515-5964-4405-9e0b-6d2c986c3308)
+
+
+```py
+low = q1 - 1.5*iqr
+low
+```
+
+![image](https://github.com/PSriVarshan/exno1/assets/114944059/b68f4b97-1246-4747-9aff-06e058c94f44)
+
+```py
+high = q3 + 1.5*iqr
+high
+```
+
+![image](https://github.com/PSriVarshan/exno1/assets/114944059/da8aa517-c1de-4e43-91d6-ec677f8beaa5)
+
+
+```py
+df1 = df[((df['height'] >=low)& (df['height'] <=high))]
+df1
+```
+![image](https://github.com/PSriVarshan/exno1/assets/114944059/5444510b-6eb1-4fdd-a65f-02c85bd685d4)
+
+
+```py
+z = np.abs(stats.zscore(df['height']))
+z
+```
+![image](https://github.com/PSriVarshan/exno1/assets/114944059/02efcb16-a37a-4313-8111-7396dbd21f2e)
+
+```py
+df1 = df[z<3]
+df1
+```
+
+![image](https://github.com/PSriVarshan/exno1/assets/114944059/fbfd480f-960d-4d51-8695-71718cc8a342)
+
+<hr>
+
+## Result
+<br>
+
+### Hence the data was cleaned , outliers were detected and removed.
